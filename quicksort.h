@@ -5,16 +5,6 @@
 
 using namespace std;
 
-double quicksort(int *array, int size){
-  double start = clock();
-
-  quick(array, 0, size-1);
-
-  double end = clock();
-  double total = (end - start) / CLOCKS_PER_SEC ;
-  return total;
-}
-
 //referenced from:
 //http://codereview.stackexchange.com/questions/77782/quick-sort-implementation
 void quick(int *array, int left, int right){
@@ -35,4 +25,14 @@ void quick(int *array, int left, int right){
       return;
     }
   }
+}
+
+double quicksort(int *array, int size){
+  double start = clock();
+
+  quick(array, 0, size-1);
+
+  double end = clock();
+  double total = (end - start) / CLOCKS_PER_SEC ;
+  return total;
 }
