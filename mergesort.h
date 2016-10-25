@@ -7,8 +7,8 @@ using namespace std;
 
 //referenced from:
 //http://www.sanfoundry.com/cpp-program-implement-merge-sort/
-void merger(int *a, int low, int high, int mid){
-  int i, j, k, c[50];
+void merger(int *a, int low, int high, int mid, int size){
+  int i, j, k, c[size];
   i = low;
   k = low;
   j = mid + 1;
@@ -25,34 +25,34 @@ void merger(int *a, int low, int high, int mid){
     }
   }
   while (i <= mid){
-      c[k] = a[i];
-      k++;
-      i++;
+    c[k] = a[i];
+    k++;
+    i++;
   }
   while (j <= high){
-      c[k] = a[j];
-      k++;
-      j++;
+    c[k] = a[j];
+    k++;
+    j++;
   }
   for (i = low; i < k; i++){
-      a[i] = c[i];
+    a[i] = c[i];
   }
 }
 
-void mergeS(int *a, int low, int high){
+void mergeS(int *a, int low, int high, int size){
   int mid;
   if (low < high){
     mid=(low+high)/2;
-    mergeS(a,low,mid);
-    mergeS(a,mid+1,high);
-    merger(a,low,high,mid);
+    mergeS(a,low,mid, size);
+    mergeS(a,mid+1,high, size);
+    merger(a,low,high,mid, size);
   }
 }
 
 double mergesort(int *array, int size){
   double start = clock();
 
-  mergeS(a, 0, size-1);
+  mergeS(a, 0, size-1, size);
 
   double end = clock();
   double total = (end - start) / CLOCKS_PER_SEC ;
