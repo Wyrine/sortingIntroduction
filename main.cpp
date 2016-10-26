@@ -27,7 +27,7 @@ typedef double (*SortingFunction)(int*, int);
 
 // Populate array with random values (using the same seed each time)
 void setRandomValues(int array[], int size, time_t seed = time(NULL)){
-    
+
     /* initialize random seed: */
     srand( (unsigned int) seed); // seed the random number generator
 
@@ -47,6 +47,10 @@ void setAnswerKey(int array[], int size){
 
 // compare the values in array and answers
 void verifySort(int array[], int answers[], int size){
+    cout << "Answer:\n";
+    printA(answers, size);
+    cout << "Mine:\n";
+    printA(array, size);
     for( int i = 0; i < size; i++){
         if( array[i] != answers[i]){
             cerr << "ERROR: Array not sorted at index " << i << ": (" << array[i] << " should've been " << answers[i] << ")!\n";
@@ -59,7 +63,7 @@ const int DEFAULT_N = 1000;
 const string DEFAULT_OUTPUT_FILENAME = "labSorting-outputA.txt";
 
 int main( int argc, char* argv[]){
- 
+
     int maxN = -1;     // largest array size
     int* arrayOrig; // array of random elements
     int* array;     // array of random elements (copied from arrayOrig)
@@ -78,12 +82,12 @@ int main( int argc, char* argv[]){
     sortingFunctionNames.push_back( "Heap");
     sortingFunctionNames.push_back( "Merge");
     sortingFunctionNames.push_back( "Quick");
-    
+
     sortingFunctionCallbacks.push_back( insertionSort);
     sortingFunctionCallbacks.push_back( bubbleSort);
-    sortingFunctionCallbacks.push_back( heapsort);
+    //sortingFunctionCallbacks.push_back( heapsort);
     sortingFunctionCallbacks.push_back( mergesort);
-    sortingFunctionCallbacks.push_back( quicksort);
+    //sortingFunctionCallbacks.push_back( quicksort);
 
     /*
      * get N from STDIN
@@ -116,7 +120,7 @@ int main( int argc, char* argv[]){
         cerr << "ERROR: Opening output file \"" << outputFilename << "\"\n";
         exit(1);
     }
-    
+
     /*
      * Get a seed (if specified)
      */
@@ -138,7 +142,7 @@ int main( int argc, char* argv[]){
     }
     outfile << endl;
 
-    // use different values of n, starting at 100, and growing by 10x until the user specified limit is reached 
+    // use different values of n, starting at 100, and growing by 10x until the user specified limit is reached
     for(int n = 100; n <= maxN; n *= 10){
 
         try{
@@ -149,7 +153,7 @@ int main( int argc, char* argv[]){
         } catch (std::bad_alloc& ba) {
             cerr << "Memory allocation error: " << ba.what() << '\n';
             exit(1);
-        }    
+        }
 
         // populate the array with random values
         setRandomValues(arrayOrig, n, seed);
@@ -162,11 +166,11 @@ int main( int argc, char* argv[]){
         setAnswerKey(answers, n);
 
         outfile << n;
-    
+
         for( unsigned int sortI = 0; sortI < sortingFunctionCallbacks.size(); sortI++){
             // copy contents of arrayOrig into array
             memcpy( array, arrayOrig, n * sizeof( int));
-        
+
             // call the sorting function (using a function pointer)
             outfile << "\t" << sortingFunctionCallbacks[ sortI]( array, n);  // for example, will call insertionSort(array, n)
 
@@ -181,6 +185,6 @@ int main( int argc, char* argv[]){
     }
 
     outfile.close();
-    
+
     return 0;
 }

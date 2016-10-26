@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <time.h>
-#include "swap.h"
 
 using namespace std;
 
@@ -52,7 +51,9 @@ void mergeS(int *a, int low, int high, int size){
 double mergesort(int *array, int size){
   double start = clock();
 
-  mergeS(a, 0, size-1, size);
+  cout << "merge\n";
+  mergeS(array, 0, size-1, size);
+  printA(array, size);
 
   double end = clock();
   double total = (end - start) / CLOCKS_PER_SEC ;

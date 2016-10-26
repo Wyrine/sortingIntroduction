@@ -29,8 +29,9 @@ void quick(int *array, int left, int right){
 
 double quicksort(int *array, int size){
   double start = clock();
-
+  cout << "quick\n";
   quick(array, 0, size-1);
+  printA(array, size);
 
   double end = clock();
   double total = (end - start) / CLOCKS_PER_SEC ;
