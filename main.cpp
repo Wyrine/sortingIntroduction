@@ -47,10 +47,7 @@ void setAnswerKey(int array[], int size){
 
 // compare the values in array and answers
 void verifySort(int array[], int answers[], int size){
-    cout << "Answer:\n";
-    printA(answers, size);
-    cout << "Mine:\n";
-    printA(array, size);
+
     for( int i = 0; i < size; i++){
         if( array[i] != answers[i]){
             cerr << "ERROR: Array not sorted at index " << i << ": (" << array[i] << " should've been " << answers[i] << ")!\n";
@@ -83,11 +80,11 @@ int main( int argc, char* argv[]){
     sortingFunctionNames.push_back( "Merge");
     sortingFunctionNames.push_back( "Quick");
 
-    sortingFunctionCallbacks.push_back( insertionSort);
-    sortingFunctionCallbacks.push_back( bubbleSort);
-    //sortingFunctionCallbacks.push_back( heapsort);
-    sortingFunctionCallbacks.push_back( mergesort);
-    //sortingFunctionCallbacks.push_back( quicksort);
+	sortingFunctionCallbacks.push_back( insertionSort);
+	sortingFunctionCallbacks.push_back( bubbleSort);
+	sortingFunctionCallbacks.push_back( heapsort);
+	sortingFunctionCallbacks.push_back( mergesort);
+    sortingFunctionCallbacks.push_back( quicksort);
 
     /*
      * get N from STDIN

@@ -6,39 +6,47 @@
 using namespace std;
 
 //reference used:
-//http://www.sanfoundry.com/cpp-program-implement-heap-sort/
-void max_heapify(int *a, int i, int n){
-  int j, temp;
-  temp = a[i];
-  j = 2*i;
-  while (j <= n){
-    if (j < n && a[j+1] > a[j]) j = j+1;
-    if (temp > a[j]) break;
-    else if (temp <= a[j]){
-      a[j/2] = a[j];
-      j = 2*j;
-    }
-  }
-  a[j/2] = temp;
-  return;
+//http://quiz.geeksforgeeks.org/heap-sort/
+void heapify(int arr[], int n, int i)
+{
+	int largest = i;  // Initialize largest as root
+	int l = 2 * i + 1;  // left = 2*i + 1
+	int r = 2 * i + 2;  // right = 2*i + 2
+
+						// If left child is larger than root
+	if (l < n && arr[l] > arr[largest])
+		largest = l;
+
+	// If right child is larger than largest so far
+	if (r < n && arr[r] > arr[largest])
+		largest = r;
+
+	// If largest is not root
+	if (largest != i)
+	{
+		swap(arr[i], arr[largest]);
+
+		// Recursively heapify the affected sub-tree
+		heapify(arr, n, largest);
+	}
 }
 
-void build_maxheap(int *a, int n){
-  for(int i = n/2; i >= 1; i--){
-    max_heapify(a, i, n);
-  }
+void heapS(int *array, int size) {
+	for (int i = size / 2 - 1; i >= 0; i--)
+		heapify(array, size, i);
+
+	// One by one extract an element from heap
+	for (int i = size - 1; i >= 0; i--) {
+		swap(array, 0, i);
+		heapify(array, i, 0);
+	}
 }
 
 
 double heapsort(int *array, int size){
   double start = clock();
 
-  cout << "heap\n";
-  for (int i = size; i >= 2; i--){
-    swap(array, i, 1);
-    max_heapify(array, 1, i - 1);
-  }
-  printA(array, size);
+  heapS(array, size);
 
   double end = clock();
   double total = (end - start) / CLOCKS_PER_SEC ;
